@@ -55,7 +55,7 @@ app.post("/EditEntry", async (req, res) => {
     const incomingData = req.body;
 
     try {
-        const dataObject = await DataModel.findOne({ email: incomingData.title });
+        const dataObject = await DataModel.findOne({ title: incomingData.title });
         if (!dataObject) {
             res.json({ success: false, message: "Data not found" });
         } else {
@@ -65,24 +65,6 @@ app.post("/EditEntry", async (req, res) => {
         }
     } catch (error) {
         console.error("Error updating data:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-//delete
-app.delete("/DeleteEntry", async (req, res) => {
-    const incomingData = req.body;
-
-    try {
-        const dataObject = await DataModel.findOne({ email: incomingData.title });
-        if (!dataObject) {
-            res.json({ success: false, message: "Data not found" });
-        } else {
-            await dataObject.remove();
-            res.json({ success: true, message: "Data deleted successfully!" });
-        }
-    } catch (error) {
-        console.error("Error deleting data:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

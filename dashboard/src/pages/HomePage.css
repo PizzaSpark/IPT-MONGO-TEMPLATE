@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; 
+}
+
+.content {
+    padding-left: 15em;
+    padding-right: 15em;
+    padding-top: 3em;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 3rem;
+    color: #8697df;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-button {
+    width: 10%;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    gap: 1em;
+}
+
+.modal-padding {
+    display: flex;
+    padding-bottom: 1em;
+}

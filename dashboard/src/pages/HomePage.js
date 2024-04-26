@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import NavBar from "./NavBar";
+import "./HomePage.css";
 import axios from "axios";
 import {
     TableBody,
@@ -131,12 +132,12 @@ function HomePage() {
                                     <TableCell>{item.title}</TableCell>
                                     <TableCell>
                                         <div className="button-group">
-                                        <Edit
-                                            onClick={() =>
-                                                openModal(item, true)
-                                            }
-                                        />
-                                        <Delete />
+                                            <Edit
+                                                onClick={() =>
+                                                    openModal(item, true)
+                                                }
+                                            />
+                                            <Delete />
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -147,7 +148,9 @@ function HomePage() {
 
                 <Modal open={modalState} onClose={closeModal}>
                     <Box className="modal">
-                        <Typography className="modal-padding" variant="h5">{isEditMode ? "Edit Entry" : "Add New Entry"}</Typography>
+                        <Typography className="modal-padding" variant="h5">
+                            {isEditMode ? "Edit Entry" : "Add New Entry"}
+                        </Typography>
                         {currentData && (
                             <form
                                 onSubmit={
@@ -166,7 +169,7 @@ function HomePage() {
                                     onChange={handleChange}
                                     InputLabelProps={{
                                         shrink: true,
-                                      }}
+                                    }}
                                 />
 
                                 <TextField
@@ -178,7 +181,7 @@ function HomePage() {
                                     onChange={handleChange}
                                     InputLabelProps={{
                                         shrink: true,
-                                      }}
+                                    }}
                                 />
 
                                 <TextField
@@ -190,12 +193,16 @@ function HomePage() {
                                     onChange={handleChange}
                                     InputLabelProps={{
                                         shrink: true,
-                                      }}
-                                      multiline
-                                      rows={5}
+                                    }}
+                                    multiline
+                                    rows={5}
                                 />
 
-                                <Button className="manage-button" variant="contained" type="submit">
+                                <Button
+                                    className="manage-button"
+                                    variant="contained"
+                                    type="submit"
+                                >
                                     {isEditMode ? "EDIT" : "ADD"}
                                 </Button>
                             </form>
