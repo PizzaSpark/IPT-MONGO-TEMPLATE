@@ -39,7 +39,7 @@ app.post("/AddEntry", async (req, res) => {
     }
 });
 
-//read or view
+//view
 app.get("/ViewEntries", async (req, res) => {
     try {
         const gotDataList = await DataModel.find();
@@ -50,7 +50,7 @@ app.get("/ViewEntries", async (req, res) => {
     }
 });
 
-//update
+//edit
 app.post("/EditEntry", async (req, res) => {
     const incomingData = req.body;
 

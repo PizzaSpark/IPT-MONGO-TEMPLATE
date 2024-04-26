@@ -14,6 +14,7 @@ import {
     TableContainer,
     TextField,
     Typography,
+    Paper
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
@@ -116,7 +117,7 @@ function HomePage() {
                     ADD ENTRY
                 </Button>
 
-                <TableContainer>
+                <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
