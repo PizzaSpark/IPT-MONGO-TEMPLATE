@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
+import NavBar from "./NavBar";
 import axios from "axios";
 import {
     TableBody,
@@ -12,23 +12,19 @@ import {
     Table,
     TableContainer,
     TextField,
-    InputAdornment,
-    IconButton,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
+    Typography,
 } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 
-function Manage() {
+function HomePage() {
     const [dataList, setDataList] = useState([]);
     const [refreshDataList, setRefreshDataList] = useState(false);
     const [modalState, setModalState] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const initialData = {
-        id: "",
-        firstname: "",
-        year: "",
+        date: "",
+        title: "",
+        content: "",
     };
 
     const [currentData, setCurrentData] = useState(initialData);
@@ -52,7 +48,7 @@ function Manage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:1337/view`)
+            .get(`http://localhost:1337/ViewEntries`)
             .then((response) => {
                 setDataList(response.data);
             })
@@ -61,12 +57,12 @@ function Manage() {
             });
     }, [refreshDataList]);
 
-    const handleAddData = async (e) => {
+    const handleAddEntry = async (e) => {
         e.preventDefault();
 
         try {
             const response = await axios.post(
-                "http://localhost:1337/add",
+                "http://localhost:1337/AddEntry",
                 currentData
             );
 
@@ -83,12 +79,12 @@ function Manage() {
         }
     };
 
-    const handleUpdateData = async (e) => {
+    const handleEditEntry = async (e) => {
         e.preventDefault();
 
         try {
             const response = await axios.post(
-                "http://localhost:1337/update",
+                "http://localhost:1337/EditEntry",
                 currentData
             );
 
@@ -109,42 +105,39 @@ function Manage() {
 
     return (
         <div className="container">
-            <Sidebar />
+            <NavBar />
             <div className="content">
-                <h1>Manage</h1>
                 <Button
                     className="manage-button"
                     variant="contained"
                     onClick={() => openModal(initialData, false)}
                 >
-                    ADD
+                    ADD ENTRY
                 </Button>
 
                 <TableContainer>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>First Name</TableCell>
-                                <TableCell>Year</TableCell>
-                                <TableCell>EDIT</TableCell>
+                                <TableCell align="center">Date</TableCell>
+                                <TableCell align="center">Title</TableCell>
+                                <TableCell align="center">Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {dataList.map((item) => (
-                                <TableRow key={item.id}>
-                                    <TableCell>{item.firstname}</TableCell>
-                                    <TableCell>{item.year}</TableCell>
-
+                                <TableRow key={item.title}>
+                                    <TableCell>{item.date}</TableCell>
+                                    <TableCell>{item.title}</TableCell>
                                     <TableCell>
-                                        <Button
-                                            variant="contained"
+                                        <div className="button-group">
+                                        <Edit
                                             onClick={() =>
                                                 openModal(item, true)
                                             }
-                                        >
-                                            EDIT
-                                        </Button>
+                                        />
+                                        <Delete />
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -154,56 +147,57 @@ function Manage() {
 
                 <Modal open={modalState} onClose={closeModal}>
                     <Box className="modal">
-                        {/* it will only render the typography if not null */}
+                        <Typography className="modal-padding" variant="h5">{isEditMode ? "Edit Entry" : "Add New Entry"}</Typography>
                         {currentData && (
                             <form
                                 onSubmit={
                                     isEditMode
-                                        ? handleUpdateData
-                                        : handleAddData
+                                        ? handleEditEntry
+                                        : handleAddEntry
                                 }
                             >
                                 <TextField
-                                    id="id"
+                                    id="date"
                                     required
-                                    label="ID"
+                                    label="Date"
                                     variant="outlined"
-                                    value={currentData.id}
+                                    type="date"
+                                    value={currentData.date}
                                     onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                      }}
                                 />
 
                                 <TextField
-                                    id="firstname"
+                                    id="title"
                                     required
-                                    label="First Name"
+                                    label="Title"
                                     variant="outlined"
-                                    value={currentData.firstname}
+                                    value={currentData.title}
                                     onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                      }}
                                 />
 
-                                <FormControl variant="outlined">
-                                    <InputLabel>Date</InputLabel>
-                                    <Select
-                                        name="year"
-                                        value={currentData.year}
-                                        required
-                                        onChange={handleChange}
-                                        label="year"
-                                    >
-                                        <MenuItem value="1">1</MenuItem>
-                                        <MenuItem value="2">2</MenuItem>
-                                        <MenuItem value="3">3</MenuItem>
-                                        <MenuItem value="4">4</MenuItem>
-                                        <MenuItem value="5">5</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <TextField
+                                    id="content"
+                                    required
+                                    label="Content"
+                                    variant="outlined"
+                                    value={currentData.content}
+                                    onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      multiline
+                                      rows={5}
+                                />
 
-                                    <Button
-                                        variant="contained"
-                                        type="submit"
-                                    >
-                                        {isEditMode ? "UPDATE" : "ADD"}
-                                    </Button>
+                                <Button className="manage-button" variant="contained" type="submit">
+                                    {isEditMode ? "EDIT" : "ADD"}
+                                </Button>
                             </form>
                         )}
                     </Box>
@@ -213,4 +207,4 @@ function Manage() {
     );
 }
 
-export default Manage;
+export default HomePage;

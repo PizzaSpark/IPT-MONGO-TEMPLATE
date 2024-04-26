@@ -4,62 +4,34 @@ body {
 
 .container {
     display: flex;
-
-    /* uncomment below if you want navbar instead of sidebar */
-    /* flex-direction: column; */ 
+    flex-direction: column; 
 }
 
 .content {
-    padding: 1em;
+    padding-left: 15em;
+    padding-right: 15em;
+    padding-top: 3em;
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.sidebar {
-    height: 100vh;
-    width: 20%;
-    background-color: #303030;
-    font-family: "Poppins", sans-serif;
-    font-size: 18px;
-    position: sticky;
-    top: 0;
-}
-
-.sidebar-items {
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 20px;
-}
-
-.sidebar-items a {
-    text-decoration: none;
-}
-
-.sidebar-items-tile {
-    display: flex;
-    align-items: center;
-    color: #ffffff;
-    gap: 5px;
-}
-
 .navbar {
     display: flex;
-    height: 60px;
-    background-color: #d14959;
+    height: 100px;
+    background-color: salmon;
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
     position: sticky;
     top: 0;
+    padding-left: 5%;
 }
 
 .navbar-items {
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: flex-start;
     font-weight: bold;
     align-items: center;
 }
@@ -70,26 +42,6 @@ body {
     gap: 5px;
 }
 
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.card {
-    display: flex;
-    padding: 5rem;
-}
-
-.card-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 form {
     display: flex;
     flex-direction: column;
@@ -98,11 +50,14 @@ form {
 
 .button-group {
     display: flex;
-    gap: 1rem;
+    gap: 3rem;
+    color: #8697df;
+    align-items: center;
+    justify-content: center;
 }
 
 .manage-button {
-    width: 15%;
+    width: 10%;
 }
 
 .modal {
@@ -110,10 +65,14 @@ form {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 600px;
     background-color: #fff;
-    border: 2px solid #000;
-    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.5);
     padding: 16px;
     border-radius: 10px;
+    gap: 1em;
+}
+
+.modal-padding {
+    display: flex;
+    padding-bottom: 1em;
 }

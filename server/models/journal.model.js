@@ -3,15 +3,13 @@ const { Schema, model: _model } = mongoose;
 
 const requiredString = { type: String, required: true };
 const requiredUniqueString = { type: String, required: true, unique: true };
-const collectionName = 'DataModel';
+const collectionName = 'journal-data';
 
 const DataModel = new Schema(
   {
-    firstname: requiredString,
-    lastname: requiredString,
-    middlename: requiredString,
-    email: requiredUniqueString, // ito yung unique na as in primary key mo
-    password: requiredString,
+    date: requiredString,
+    title: requiredUniqueString,
+    content: requiredString,
   },
   { collection: collectionName } 
 );

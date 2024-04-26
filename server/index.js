@@ -4,13 +4,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const mongoose = require("mongoose");
-const DataModel = require("./models/datamodel.model");
+const DataModel = require("./models/journal.model");
 const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
 const port = 1337;
-const dbName = "ipt";
+const dbName = "journal-database";
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -26,7 +26,7 @@ mongoose
     .catch((err) => console.error("Database connection error", err));
 
 //add
-app.post("/add", async (req, res) => {
+app.post("/AddEntry", async (req, res) => {
     const incomingData = req.body;
 
     try {
@@ -40,7 +40,7 @@ app.post("/add", async (req, res) => {
 });
 
 //read or view
-app.get("/view", async (req, res) => {
+app.get("/ViewEntries", async (req, res) => {
     try {
         const gotDataList = await DataModel.find();
         res.json(gotDataList);
@@ -51,11 +51,11 @@ app.get("/view", async (req, res) => {
 });
 
 //update
-app.post("/update", async (req, res) => {
+app.post("/EditEntry", async (req, res) => {
     const incomingData = req.body;
 
     try {
-        const dataObject = await DataModel.findOne({ email: incomingData.email });
+        const dataObject = await DataModel.findOne({ email: incomingData.title });
         if (!dataObject) {
             res.json({ success: false, message: "Data not found" });
         } else {
@@ -70,11 +70,11 @@ app.post("/update", async (req, res) => {
 });
 
 //delete
-app.delete("/delete", async (req, res) => {
+app.delete("/DeleteEntry", async (req, res) => {
     const incomingData = req.body;
 
     try {
-        const dataObject = await DataModel.findOne({ email: incomingData.email });
+        const dataObject = await DataModel.findOne({ email: incomingData.title });
         if (!dataObject) {
             res.json({ success: false, message: "Data not found" });
         } else {
@@ -83,44 +83,6 @@ app.delete("/delete", async (req, res) => {
         }
     } catch (error) {
         console.error("Error deleting data:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-//sign-in
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const dataObject = await DataModel.findOne({ username });
-
-        if (!dataObject) {
-            return res.status(400).json({ error: 'Invalid username or password' });
-        }
-
-        if (dataObject.password !== password) {
-            return res.status(400).json({ error: 'Invalid username or password' });
-        }
-
-        // User is authenticated
-        res.json({ success: true, message: 'Logged in successfully!' });
-    } catch (error) {
-        console.error('Error logging in:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-
-//sign-up
-app.post("/signup", async (req, res) => {
-    const incomingData = req.body;
-
-    try {
-        const dataObject = new DataModel(incomingData);
-        await dataObject.save();
-        res.json({ success: true, message: "Signed up successfully!" });
-    } catch (error) {
-        console.error("Error signing up:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
